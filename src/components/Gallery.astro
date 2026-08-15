@@ -1,0 +1,23 @@
+---
+type GalleryImage = string | { src: string; caption?: string };
+interface Props {
+  gallery?: GalleryImage[];
+  title?: string;
+}
+const { gallery, title } = Astro.props as Props;
+---
+{gallery && gallery.length > 0 && (
+  <div class="gallery">
+    {gallery.map((img) => {
+      const src = typeof img === 'string' ? img : img.src;
+      const caption = typeof img === 'string' ? '' : img.caption || '';
+      const alt = caption || title || '';
+      return (
+        <figure class="gallery-item">
+          <img src={src} alt={alt} loading="lazy" />
+          {caption && <figcaption>{caption}</figcaption>}
+        </figure>
+      );
+    })}
+  </div>
+)}

@@ -1,0 +1,48 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import FullLayout from '../layouts/FullLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { SECTIONS, SITE, MAX_HOME_SECTIONS, HOME_POSTS_PER_SECTION } from '../config';
+import { excerptFrom, byOrder } from '../utils';
+
+const home = await getEntry('pages', 'home');
+const { Content: HomeContent } = home ? await render(home) : { Content: null };
+
+// Every section in SECTIONS gets its own spotlight block automatically —
+// add a category to src/config.ts and a block for it appears with no
+// further changes needed. Sections with zero posts are skipped. Shows at
+// most MAX_HOME_SECTIONS sections, each with its HOME_POSTS_PER_SECTION
+// latest (lowest `order`) post.
+const homeSections = [];
+for (const section of SECTIONS) {
+  const entries = (await getCollection(section.key)).sort(byOrder);
+  if (entries.length === 0) continue;
+  homeSections.push({
+    section,
+    posts: entries.slice(0, HOME_POSTS_PER_SECTION).map((e) => ({
+      href: `/${section.key}/${e.id}/`,
+      title: e.data.title,
+      excerpt: e.data.excerpt || excerptFrom(e.body ?? ''),
+      tags: e.data.tags,
+    })),
+  });
+  if (homeSections.length >= MAX_HOME_SECTIONS) break;
+}
+---
+<FullLayout description={SITE.tagline} active="home">
+  <section class="intro">
+    {HomeContent && <HomeContent />}
+  </section>
+
+  {homeSections.map(({ section, posts }) => (
+    <section class="home-section">
+      <div class="home-section-head">
+        <h2>{section.label}</h2>
+        <a class="see-all" href={`/${section.key}/`}>See all →</a>
+      </div>
+      <ul class="post-list">
+        {posts.map((p) => <PostCard {...p} />)}
+      </ul>
+    </section>
+  ))}
+</FullLayout>

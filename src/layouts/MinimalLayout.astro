@@ -1,0 +1,33 @@
+---
+// Minimal layout: no header/nav, no footer — just the title, the content,
+// and a single back link (rendered by the page itself). Used for
+// individual posts and standalone pages (about, contact) so reading is
+// distraction-free; the back link is the only way out, by design.
+import '../styles/global.css';
+import { SITE } from '../config';
+
+interface Props {
+  title?: string | null;
+  description?: string;
+}
+const { title, description } = Astro.props as Props;
+const pageTitle = title ? `${title} — ${SITE.name}` : SITE.name;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={description || SITE.tagline} />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <main class="minimal-main">
+    <slot />
+  </main>
+</body>
+</html>

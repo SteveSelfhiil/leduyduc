@@ -1,0 +1,25 @@
+---
+// Standalone pages (about, contact) — everything in the `pages` collection
+// except `home`, which index.astro handles specially. Minimal layout: just
+// a back-to-home link, the title, and the content — no header/nav/footer.
+import { getCollection, render } from 'astro:content';
+import MinimalLayout from '../layouts/MinimalLayout.astro';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages', ({ id }) => id !== 'home');
+  return pages.map((entry) => ({
+    params: { page: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<MinimalLayout title={entry.data.title} description={entry.data.description}>
+  <article class="page">
+    <p class="post-back"><a href="/">← Back to home</a></p>
+    <h1>{entry.data.title}</h1>
+    <Content />
+  </article>
+</MinimalLayout>

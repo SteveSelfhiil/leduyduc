@@ -1,0 +1,38 @@
+---
+// Section listing pages (essays/poems/photos index) — full layout with
+// header/nav/footer, since this is a navigation hub, not a reading page.
+import { getCollection } from 'astro:content';
+import FullLayout from '../../layouts/FullLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { SECTIONS } from '../../config';
+import { excerptFrom, byOrder } from '../../utils';
+
+export async function getStaticPaths() {
+  return SECTIONS.map((section) => ({
+    params: { section: section.key },
+    props: { section },
+  }));
+}
+
+const { section } = Astro.props;
+const entries = (await getCollection(section.key)).sort(byOrder);
+const posts = entries.map((e) => ({
+  href: `/${section.key}/${e.id}/`,
+  title: e.data.title,
+  excerpt: e.data.excerpt || excerptFrom(e.body ?? ''),
+  tags: e.data.tags,
+}));
+---
+<FullLayout title={section.label} description={section.intro} active={section.key}>
+  <div class="section-intro">
+    <h1>{section.label}</h1>
+    <p>{section.intro}</p>
+  </div>
+  {posts.length > 0 ? (
+    <ul class="post-list">
+      {posts.map((p) => <PostCard {...p} />)}
+    </ul>
+  ) : (
+    <p class="empty-note">Nothing published here yet.</p>
+  )}
+</FullLayout>

@@ -1,0 +1,477 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------
+   A quiet, Medium-esque, zen-leaning stylesheet.
+   Warm paper background, serif reading type, one muted
+   accent color, generous whitespace, almost no chrome.
+
+   Design tokens live in @theme (Tailwind v4's CSS-first config) so they
+   double as utility classes (bg-paper, text-ink-soft, font-serif, ...) if
+   you ever want them, while all the actual component styling below stays
+   plain CSS referencing the same variables.
+--------------------------------------------------------- */
+
+@theme {
+  --color-paper: #faf8f4;
+  --color-ink: #262421;
+  --color-ink-soft: #6b6660;
+  --color-rule: #e6e1d8;
+  --color-accent: #6f7d5f; /* muted sage */
+  --color-accent-soft: #97a389;
+  --font-serif: 'EB Garamond', Charter, 'Iowan Old Style', 'Georgia', 'Times New Roman', serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+:root {
+  --max-width: 680px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  font-size: 20px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+/* Mobile-safe by default: no matter where an image appears (post body,
+   page content, home intro, or raw HTML with a fixed width/height
+   attribute), it can never overflow its container on a small screen.
+   More specific rules below (cover images, gallery, size classes) still
+   take precedence as needed. */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------- header ---------- */
+
+.site-header {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-sans);
+}
+
+.site-header .logo {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+
+.site-header nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.site-header nav a {
+  font-size: 0.88rem;
+  text-decoration: none;
+  color: var(--color-ink-soft);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.site-header nav a:hover,
+.site-header nav a.active {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent-soft);
+}
+
+/* ---------- layout ---------- */
+
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1rem 1.5rem 5rem;
+}
+
+/* Individual posts and standalone pages (about, contact) have no site
+   header above them, so give the back link/title some breathing room. */
+main.minimal-main {
+  padding-top: 3.5rem;
+}
+
+@media (max-width: 480px) {
+  main.minimal-main {
+    padding-top: 2.5rem;
+  }
+}
+
+.page h1,
+.post h1,
+.section-intro h1 {
+  font-size: 2.1rem;
+  line-height: 1.3;
+  margin: 0.4em 0 0.6em;
+}
+
+.empty-note {
+  font-family: var(--font-sans);
+  color: var(--color-ink-soft);
+  font-size: 0.98rem;
+}
+
+/* ---------- logo image ---------- */
+/* Adjust height here to resize the logo; width scales automatically. */
+.logo-img {
+  height: 56px;
+  max-height: 10vw;
+  width: auto;
+  display: block;
+}
+
+/* ---------- images inside posts ---------- */
+
+.cover-image {
+  margin: 0 0 2rem;
+}
+
+.cover-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+}
+
+.cover-image figcaption {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+  margin-top: 0.7em;
+  text-align: center;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.4rem;
+  margin: 2.2rem 0 0;
+}
+
+.gallery-item {
+  margin: 0;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+}
+
+.gallery-item figcaption {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+  margin-top: 0.6em;
+}
+
+/* ---------- home ---------- */
+
+.intro p {
+  margin: 0 0 1.3em;
+}
+
+.intro p:first-child {
+  font-size: 1.15rem;
+  color: var(--color-ink);
+}
+
+.home-section {
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--color-rule);
+}
+
+.home-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+.home-section-head h2 {
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.see-all {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+.home-section-note {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--color-ink-soft);
+  margin: 0;
+}
+
+/* ---------- section index (essays / poems / photos listing) ---------- */
+
+.section-intro {
+  margin-bottom: 2.5rem;
+}
+
+.section-intro p {
+  font-family: var(--font-sans);
+  color: var(--color-ink-soft);
+  font-size: 1.02rem;
+  margin-top: 0.4em;
+}
+
+.post-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.post-card {
+  padding: 1.6rem 0;
+  border-top: 1px solid var(--color-rule);
+}
+
+.post-list .post-card:first-child {
+  border-top: 1px solid var(--color-rule);
+}
+
+.post-card-title {
+  display: block;
+  font-size: 1.28rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--color-ink);
+  line-height: 1.4;
+}
+
+.post-card-title:hover {
+  color: var(--color-accent);
+}
+
+.post-card-excerpt {
+  font-family: var(--font-sans);
+  color: var(--color-ink-soft);
+  font-size: 0.98rem;
+  margin: 0.5em 0 0;
+  line-height: 1.6;
+}
+
+.post-card-tags {
+  font-family: var(--font-sans);
+  color: var(--color-accent-soft);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin: 0.7em 0 0;
+}
+
+/* ---------- single post ---------- */
+
+.post-back {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+}
+
+.post-back a {
+  text-decoration: none;
+  color: var(--color-ink-soft);
+}
+
+.post-back a:hover {
+  color: var(--color-accent);
+}
+
+.post-tags {
+  font-family: var(--font-sans);
+  color: var(--color-accent-soft);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin: -0.4em 0 1.6em;
+}
+
+.post-body p,
+.page p {
+  margin: 0 0 1.35em;
+}
+
+.post-body h2,
+.page h2 {
+  font-size: 1.4rem;
+  margin: 1.6em 0 0.6em;
+}
+
+.post-body h3,
+.page h3 {
+  font-size: 1.15rem;
+  margin: 1.4em 0 0.5em;
+}
+
+.post-body ul,
+.post-body ol,
+.page ul,
+.page ol {
+  margin: 0 0 1.35em;
+  padding-left: 1.3em;
+}
+
+.post-body li,
+.page li {
+  margin-bottom: 0.4em;
+}
+
+.post-body blockquote,
+.page blockquote {
+  margin: 1.5em 0;
+  padding-left: 1.1em;
+  border-left: 3px solid var(--color-accent-soft);
+  color: var(--color-ink-soft);
+  font-style: italic;
+}
+
+.post-body a,
+.page a {
+  color: var(--color-accent);
+}
+
+.post-body img,
+.page img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Optional size classes — add class="img-25" / "img-50" / "img-75" to any
+   <img> tag in a post to constrain its width without doing pixel math.
+   They also center the image and add breathing room above/below. */
+.post-body img.img-25,
+.page img.img-25 {
+  max-width: 25%;
+}
+
+.post-body img.img-50,
+.page img.img-50 {
+  max-width: 50%;
+}
+
+.post-body img.img-75,
+.page img.img-75 {
+  max-width: 75%;
+}
+
+.post-body img.img-25,
+.post-body img.img-50,
+.post-body img.img-75,
+.page img.img-25,
+.page img.img-50,
+.page img.img-75 {
+  display: block;
+  margin: 1.5em auto;
+}
+
+.post-body hr,
+.page hr {
+  border: none;
+  border-top: 1px solid var(--color-rule);
+  margin: 2.2em 0;
+}
+
+/* career timeline used on the About page */
+.timeline {
+  list-style: none;
+  padding: 0;
+  margin: 1.5em 0;
+}
+
+.timeline li {
+  padding: 0.9em 0;
+  border-top: 1px solid var(--color-rule);
+  display: flex;
+  gap: 1.2rem;
+  align-items: baseline;
+}
+
+.timeline .when {
+  flex: 0 0 auto;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+}
+
+.timeline .what {
+  font-size: 1.02rem;
+}
+
+/* ---------- footer ---------- */
+
+.site-footer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+  border-top: 1px solid var(--color-rule);
+}
+
+.site-footer p {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+  margin: 1.5rem 0 0;
+}
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 480px) {
+  body {
+    font-size: 17.5px;
+  }
+  .site-header {
+    flex-direction: column;
+    gap: 0.9rem;
+    align-items: flex-start;
+  }
+  .site-header nav {
+    gap: 1.1rem;
+  }
+  .logo-img {
+    height: 44px;
+  }
+
+  .post-body img.img-25,
+  .page img.img-25 {
+    max-width: 55%;
+  }
+  .post-body img.img-50,
+  .page img.img-50 {
+    max-width: 70%;
+  }
+  .post-body img.img-75,
+  .page img.img-75 {
+    max-width: 90%;
+  }
+}

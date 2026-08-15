@@ -1,0 +1,17 @@
+---
+interface Props {
+  cover?: string;
+  coverAlt?: string;
+  coverCaption?: string;
+  title?: string;
+}
+const { cover, coverAlt, coverCaption, title } = Astro.props as Props;
+if (!cover) return null;
+const alt = coverAlt || title || '';
+---
+{cover && (
+  <figure class="cover-image">
+    <img src={cover} alt={alt} loading="lazy" />
+    {coverCaption && <figcaption>{coverCaption}</figcaption>}
+  </figure>
+)}

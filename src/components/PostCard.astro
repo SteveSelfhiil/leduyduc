@@ -1,0 +1,14 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  excerpt?: string;
+  tags?: string[];
+}
+const { href, title, excerpt, tags } = Astro.props as Props;
+---
+<li class="post-card">
+  <a class="post-card-title" href={href}>{title}</a>
+  {excerpt && <p class="post-card-excerpt">{excerpt}</p>}
+  {tags && tags.length > 0 && <p class="post-card-tags">{tags.join(' · ')}</p>}
+</li>

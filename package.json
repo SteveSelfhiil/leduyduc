@@ -1,0 +1,21 @@
+{
+  "name": "leduyduc-site",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy": "astro build && wrangler deploy"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.0",
+    "tailwindcss": "^4.3.3"
+  },
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "wrangler": "^4.120.1"
+  }
+}
