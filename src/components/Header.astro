@@ -9,7 +9,7 @@ const { active } = Astro.props as Props;
 
 // Logo is picked up automatically the moment public/logo.png exists —
 // nothing else to wire up. Drop it in and rebuild.
-const HAS_LOGO = fs.existsSync(new URL('../../public/logo.png', import.meta.url));
+const HAS_LOGO = fs.existsSync(new URL('../../public/logo.svg', import.meta.url));
 ---
 <header class="site-header">
   <a class="logo" href="/">
