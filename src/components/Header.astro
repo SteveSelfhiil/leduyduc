@@ -14,7 +14,7 @@ const HAS_LOGO = fs.existsSync(new URL('../../public/logo.png', import.meta.url)
 <header class="site-header">
   <a class="logo" href="/">
     {HAS_LOGO
-      ? <img src="/logo.png" alt={SITE.name} height="56" class="logo-img" />
+      ? <img src="/logo.svg" alt={SITE.name} height="56" class="logo-img" />
       : SITE.name}
   </a>
   <nav>
