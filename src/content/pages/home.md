@@ -2,7 +2,7 @@
 title: Home
 ---
 
-![Le Duy Duc](/media/profile-steve.jpg)
+<img src="/media/profile-steve.jpg" alt="Le Duy Duc" class="img-25">
 
 Le Duy Duc (Steve) is the Head of Business Development, Southeast Asia at Vela Software, a subsidiary of Constellation Software Inc. (CSI) - a global company listed on the Toronto Stock Exchange with a market capitalization of USD 50 billion and annual revenue of USD 12 billion. Vela Software acquires, manages, and builds market-leading software businesses worldwide, serving customers in more than 100 countries.
 
